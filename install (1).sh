@@ -80,7 +80,7 @@ echo -e "${CYAN}[*]${RESET} Install directory: ${BOLD}$INSTALL_DIR${RESET}"
 mkdir -p "$INSTALL_DIR"
 
 # ── Download Files ───────────────────────────────────────────
-BASE_URL="https://raw.githubusercontent.com/YOUR_USERNAME/aurax-prime/main"
+BASE_URL="https://github.com/tanishqsharpunya-eng/aurax.git"
 
 echo ""
 echo -e "${CYAN}[*]${RESET} Downloading AURAX PRIME..."
