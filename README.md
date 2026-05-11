@@ -1,160 +1,263 @@
-#!/usr/bin/env bash
-# ============================================================
-#  AURAX PRIME v3.0 — One-Line Installer
-#  by tanishk sharpunya
-#  Usage: curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/aurax-prime/main/install.sh | bash
-# ============================================================
+# ⚕ AURAX PRIME v3.0 — Terminal Edition
 
-set -e
+> AI-Powered Security Analysis Toolkit
+> Built for terminal warriors, cybersecurity learners, and developers.
 
-# ── Colors ──────────────────────────────────────────────────
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-YELLOW='\033[1;33m'
-BOLD='\033[1m'
-RESET='\033[0m'
+![Python](https://img.shields.io/badge/Python-3.8+-blue)
+![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-green)
+![Version](https://img.shields.io/badge/Version-v3.0-cyan)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-# ── Banner ──────────────────────────────────────────────────
-clear
-echo -e "${CYAN}${BOLD}"
-cat << 'BANNER'
-    ___  __  ______  ___  _  __   ____  ____  _____   _______
-   / _ |/ / / / _ \/ _ || |/ /  / __ \/ __ \/  _/ | / / __/
-  / __ / /_/ / , _/ __ |    /  / /_/ / /_/ // //  |/ / _/  
- /_/ |_\____/_/|_/_/ |_/_/|_/   \____/\____/___/_/|___/___/  
-BANNER
-echo -e "${RESET}"
-echo -e "${CYAN}         ⚕  AURAX PRIME v3.0 — Terminal Edition  ⚕${RESET}"
-echo -e "${YELLOW}               by tanishk sharpunya${RESET}"
-echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-echo ""
+---
 
-# ── Detect OS ───────────────────────────────────────────────
-OS=""
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    OS="linux"
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    OS="macos"
-elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
-    OS="windows"
-else
-    OS="unknown"
-fi
+# ⚡ Overview
 
-echo -e "${CYAN}[*]${RESET} Detected OS: ${BOLD}$OS${RESET}"
+AURAX PRIME is a futuristic terminal-based cybersecurity toolkit designed for:
 
-# ── Check Python ─────────────────────────────────────────────
-echo -e "${CYAN}[*]${RESET} Checking Python..."
+* Web vulnerability scanning
+* Network reconnaissance
+* Static code analysis (SAST)
+* AI-based security posture assessment
+* Security report generation
 
-PYTHON=""
-for cmd in python3 python python3.11 python3.10 python3.9; do
-    if command -v "$cmd" &>/dev/null; then
-        VERSION=$("$cmd" --version 2>&1 | awk '{print $2}')
-        MAJOR=$(echo "$VERSION" | cut -d. -f1)
-        MINOR=$(echo "$VERSION" | cut -d. -f2)
-        if [[ "$MAJOR" -ge 3 && "$MINOR" -ge 8 ]]; then
-            PYTHON="$cmd"
-            echo -e "${GREEN}[✓]${RESET} Found Python $VERSION at $(which $cmd)"
-            break
-        fi
-    fi
-done
+Built with a premium cyberpunk-inspired interface using Python and Rich UI.
 
-if [[ -z "$PYTHON" ]]; then
-    echo -e "${RED}[✗]${RESET} Python 3.8+ not found!"
-    echo ""
-    if [[ "$OS" == "linux" ]]; then
-        echo -e "${YELLOW}    Install with:${RESET} sudo apt install python3 python3-pip"
-    elif [[ "$OS" == "macos" ]]; then
-        echo -e "${YELLOW}    Install with:${RESET} brew install python3"
-    else
-        echo -e "${YELLOW}    Download from:${RESET} https://www.python.org/downloads/"
-    fi
-    exit 1
-fi
+---
 
-# ── Install Directory ────────────────────────────────────────
-INSTALL_DIR="$HOME/.aurax-prime"
-echo -e "${CYAN}[*]${RESET} Install directory: ${BOLD}$INSTALL_DIR${RESET}"
-mkdir -p "$INSTALL_DIR"
+# 🛡 Features
 
-# ── Download Files ───────────────────────────────────────────
-BASE_URL="https://raw.githubusercontent.com/YOUR_USERNAME/aurax-prime/main"
+## 🌐 Web Vulnerability Scanner
 
-echo ""
-echo -e "${CYAN}[*]${RESET} Downloading AURAX PRIME..."
+Detects common web vulnerabilities including:
 
-# Download main script
-if command -v curl &>/dev/null; then
-    curl -fsSL "$BASE_URL/aurax_prime.py" -o "$INSTALL_DIR/aurax_prime.py"
-    curl -fsSL "$BASE_URL/logo.png"       -o "$INSTALL_DIR/logo.png" 2>/dev/null || true
-elif command -v wget &>/dev/null; then
-    wget -q "$BASE_URL/aurax_prime.py" -O "$INSTALL_DIR/aurax_prime.py"
-    wget -q "$BASE_URL/logo.png"       -O "$INSTALL_DIR/logo.png" 2>/dev/null || true
-else
-    echo -e "${RED}[✗]${RESET} Neither curl nor wget found. Please install one and retry."
-    exit 1
-fi
+* SQL Injection (SQLi)
+* Cross-Site Scripting (XSS)
+* Security header weaknesses
+* Information disclosure
+* Basic form analysis
 
-echo -e "${GREEN}[✓]${RESET} Downloaded aurax_prime.py"
+---
 
-# ── Install Python Dependencies ──────────────────────────────
-echo ""
-echo -e "${CYAN}[*]${RESET} Installing Python dependencies..."
+## 🔍 Network Port Scanner
 
-DEPS="rich requests beautifulsoup4 pyfiglet pillow"
+* Multi-threaded TCP scanning
+* Open port detection
+* Service identification
+* High-risk port warnings
+* Fast concurrent scanning
 
-$PYTHON -m pip install --quiet --upgrade pip 2>/dev/null || true
-$PYTHON -m pip install --quiet $DEPS
+---
 
-echo -e "${GREEN}[✓]${RESET} Dependencies installed"
+## 📄 Code SAST Analyzer
 
-# ── Create Launcher ──────────────────────────────────────────
-LAUNCHER="$HOME/.local/bin/aurax-prime"
-mkdir -p "$HOME/.local/bin"
+Static Application Security Testing engine supporting:
 
-cat > "$LAUNCHER" << LAUNCHER_SCRIPT
-#!/usr/bin/env bash
-exec $PYTHON "$INSTALL_DIR/aurax_prime.py" "\$@"
-LAUNCHER_SCRIPT
+* Python
+* JavaScript
+* PHP
+* Java
+* C/C++
+* TypeScript
+* Shell scripts
+* and more...
 
-chmod +x "$LAUNCHER"
+### Detects:
 
-# ── Add to PATH if needed ────────────────────────────────────
-SHELL_RC=""
-if [[ "$SHELL" == *"zsh"* ]]; then
-    SHELL_RC="$HOME/.zshrc"
-elif [[ "$SHELL" == *"bash"* ]]; then
-    SHELL_RC="$HOME/.bashrc"
-fi
+* SQL Injection
+* XSS
+* Command Injection
+* Hardcoded Secrets
+* Weak Cryptography
+* Path Traversal
+* Insecure Deserialization
 
-PATH_LINE='export PATH="$HOME/.local/bin:$PATH"'
-if [[ -n "$SHELL_RC" ]] && ! grep -q '.local/bin' "$SHELL_RC" 2>/dev/null; then
-    echo "$PATH_LINE" >> "$SHELL_RC"
-    echo -e "${GREEN}[✓]${RESET} Added ~/.local/bin to PATH in $SHELL_RC"
-fi
+---
 
-export PATH="$HOME/.local/bin:$PATH"
+## 🧠 AI Protection Scanner
 
-# ── Done ─────────────────────────────────────────────────────
-echo ""
-echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-echo -e "${GREEN}${BOLD}  ✓ AURAX PRIME installed successfully!${RESET}"
-echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
-echo ""
-echo -e "  ${BOLD}Run it:${RESET}       ${CYAN}aurax-prime${RESET}"
-echo -e "  ${BOLD}Or directly:${RESET}  ${CYAN}$PYTHON $INSTALL_DIR/aurax_prime.py${RESET}"
-echo ""
-echo -e "  ${YELLOW}Note: Open a new terminal if 'aurax-prime' command is not found.${RESET}"
-echo ""
-echo -e "${CYAN}  ⚕ Stay secure. Stay vigilant.  — by tanishk sharpunya${RESET}"
-echo ""
+AI-style security posture analysis including:
 
-# ── Auto-launch ──────────────────────────────────────────────
-read -rp "  Launch AURAX PRIME now? [Y/n]: " LAUNCH
-LAUNCH="${LAUNCH:-Y}"
-if [[ "$LAUNCH" =~ ^[Yy]$ ]]; then
-    echo ""
-    $PYTHON "$INSTALL_DIR/aurax_prime.py"
-fi
+* DNS checks
+* Port hardening checks
+* SSL/TLS inspection
+* Security header assessment
+* Protection scoring engine
+
+---
+
+## 📊 Report Engine
+
+Generate reports in:
+
+* Summary format
+* Detailed format
+* JSON
+* Markdown
+
+---
+
+# ⚙ Installation
+
+## Linux / macOS
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/aurax-prime/main/install.sh | bash
+```
+
+Or manually:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/aurax-prime.git
+cd aurax-prime
+
+pip install -r requirements.txt
+
+python3 aurax_prime.py
+```
+
+---
+
+# 🪟 Windows
+
+```powershell
+git clone https://github.com/YOUR_USERNAME/aurax-prime.git
+cd aurax-prime
+
+pip install -r requirements.txt
+
+python aurax_prime.py
+```
+
+---
+
+# 📦 Dependencies
+
+Required Python packages:
+
+```txt
+rich
+requests
+beautifulsoup4
+pyfiglet
+pillow
+```
+
+Install manually:
+
+```bash
+pip install rich requests beautifulsoup4 pyfiglet pillow
+```
+
+---
+
+# 🚀 Usage
+
+Run the toolkit:
+
+```bash
+python3 aurax_prime.py
+```
+
+or
+
+```bash
+aurax-prime
+```
+
+---
+
+# 🖥 Interface Preview
+
+```text
+⚡ AURAX PRIME — TERMINAL MENU ⚡
+
+[1] 🌐 Web Vulnerability Scanner
+[2] 🔍 Network Port Scanner
+[3] 📄 Code SAST Analyzer
+[4] 🛡️ AI Protection Scanner
+[5] 📊 Report Engine
+[0] 🚪 Exit
+```
+
+---
+
+# 📂 Project Structure
+
+```text
+aurax-prime/
+│
+├── aurax_prime.py
+├── install.sh
+├── logo.png
+├── README.md
+└── requirements.txt
+```
+
+---
+
+# 🔥 Technologies Used
+
+* Python 3
+* Rich
+* Requests
+* BeautifulSoup4
+* PyFiglet
+* Pillow
+* Multithreading
+* Regex-based detection engine
+
+---
+
+# ⚠ Disclaimer
+
+AURAX PRIME is intended for:
+
+* Educational purposes
+* Security research
+* Authorized testing environments
+
+Do NOT use this tool against systems you do not own or have permission to test.
+
+The developer is not responsible for misuse.
+
+---
+
+# 👨‍💻 Author
+
+## tanishk sharpunya
+
+Terminal Edition • AURAX PRIME v3.0
+
+> “Stay secure. Stay vigilant.”
+
+---
+
+# ⭐ Future Roadmap
+
+Planned upgrades:
+
+* CVE database integration
+* Real AI/LLM vulnerability analysis
+* PDF report export
+* Threat intelligence feeds
+* Live dashboard mode
+* API scanning
+* Dark web monitoring
+* Cloud security modules
+
+---
+
+# 🧬 Version
+
+```text
+AURAX PRIME v3.0
+Terminal Edition
+```
+
+---
+
+# 📜 License
+
+MIT License
+
+Free to use, modify, and improve.
